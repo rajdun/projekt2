@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'css/bulma.min.css' %}">
+{% endblock %}
+
+{% block content %}
+    <section class="section">
+        <div class="container">
+            <h2 class="title is-2">Edytuj swój profil</h2>
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="columns">
+                    <div class="column is-half">
+                        <h3 class="title is-3">Informacje o profilu:</h3>
+                        <div class="field">
+                            {{ profile_form.phone_number.label_tag }}
+                            {{ profile_form.phone_number }}
+                        </div>
+                        <div class="field">
+                            {{ profile_form.profile_picture.label_tag }}
+                            {% if profile.profile_picture %}
+                                <figure class="image is-128x128">
+                                    <img src="{{ profile.profile_picture.url }}" alt="Aktualny obrazek profilowy">
+                                </figure>
+                            {% else %}
+                                <p>Aktualnie brak obrazka profilowego.</p>
+                            {% endif %}
+                            {{ profile_form.profile_picture }}
+                        </div>
+                    </div>
+                    <div class="column is-half">
+                        <h3 class="title is-3">Adres:</h3>
+                        <div class="field">
+                            {{ address_form.address_line_1.label_tag }}
+                            {{ address_form.address_line_1 }}
+                        </div>
+                        <div class="field">
+                            {{ address_form.address_line_2.label_tag }}
+                            {{ address_form.address_line_2 }}
+                        </div>
+                        <div class="field">
+                            {{ address_form.city.label_tag }}
+                            {{ address_form.city }}
+                        </div>
+                        <div class="field">
+                            {{ address_form.zip_code.label_tag }}
+                            {{ address_form.zip_code }}
+                        </div>
+                        <div class="field">
+                            {{ address_form.country.label_tag }}
+                            {{ address_form.country }}
+                        </div>
+                    </div>
+                </div>
+                <div class="field">
+                    <div class="control">
+                        <button type="submit" class="button is-link">Zapisz zmiany</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </section>
+{% endblock %}

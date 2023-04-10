@@ -58,7 +58,8 @@
         <div class="navbar-end">
             <div class="navbar-item">
                 {% if user.is_authenticated %}
-                    <span class="mr-2">Witaj {{ user.username }}!</span>
+                    <span class="mr-2">Witaj <a
+                            href="{% url 'edit_profile' %}">{{ user.username }}</a>! Posiadasz {{ user.profile.get_amount }}zł.</span>
                 {% endif %}
                 <div class="buttons">
                     {% if user.is_authenticated %}
