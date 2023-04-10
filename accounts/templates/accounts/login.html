@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <form method="post" class="my-5">
+        <div class="container">
+            <h1 class="title">Zaloguj się!</h1>
+            {% csrf_token %}
+            <div class="field">
+                <label class="label">Login</label>
+                <div class="control">
+                    <input type="text" id="username" name="username" class="input" type="text" placeholder="username"
+                           required>
+                </div>
+            </div>
+
+            <div class="field">
+                <label class="label">Hasło</label>
+                <div class="control">
+                    <input class="input" type="password" id="password" name="password" placeholder="********" required>
+                </div>
+            </div>
+            <button type="submit" class="button is-medium">Zatwierdź</button>
+            {% if error %}
+                <div class="notification is-danger is-light">
+                    <button class="delete"></button>
+                    {{ error }}
+                </div>
+            {% endif %}
+        </div>
+    </form>
+{% endblock %}
+
+{% block CUSTOM_HEAD %}
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            (document.querySelectorAll('.notification .delete') || []).forEach(($delete) => {
+                const $notification = $delete.parentNode;
+
+                $delete.addEventListener('click', () => {
+                    $notification.parentNode.removeChild($notification);
+                });
+            });
+        });
+    </script>
+{% endblock %}
