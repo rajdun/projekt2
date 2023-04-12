@@ -5,6 +5,7 @@ from accounts.models import Profile
 from django.contrib.auth.decorators import login_required, user_passes_test
 from .decorators import can_manage_inventory
 from orders.models import Order, OrderItem, OrderStatus
+from cart.models import Cart, CartItem
 
 
 def products_list(request):
@@ -43,6 +44,7 @@ def buy_now(request):
             order = Order()
             order.user = request.user
             order.status = status
+            order.address = profile.default_address
             order.save()
 
             order_item = OrderItem()
@@ -58,6 +60,25 @@ def buy_now(request):
 
             return redirect('orders_list')
         else:
+            product_id = request.POST['product_id']
+            quantity = int(request.POST['quantity'])
+
+            product = get_object_or_404(Product, id=product_id)
+            inventory = get_object_or_404(Inventory, product=product)
+            cart = Cart.objects.get_or_create(user=request.user)[0]
+            cart_item, created = CartItem.objects.get_or_create(cart=cart, product=product)
+
+            if quantity > inventory.quantity:
+                return redirect('products_list')
+
+            if created:
+                cart_item.quantity = quantity
+            else:
+                cart_item.quantity = cart_item.quantity + quantity
+            cart.updated_at.now()
+            cart.save()
+            cart_item.save()
+
             return redirect('products_list')
     else:
         return redirect('products_list')

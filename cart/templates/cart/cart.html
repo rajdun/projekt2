@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% load math_filters %}
+
+{% block content %}
+    <section class="section">
+        <div class="container">
+            <h1 class="title">Koszyk</h1>
+            <table class="table is-fullwidth">
+                <thead>
+                <tr>
+                    <th>Nazwa produktu</th>
+                    <th>Cena</th>
+                    <th>Ilość</th>
+                    <th>Wartość</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for item in cart_items %}
+                    <tr>
+                        <td>{{ item.product.name }}</td>
+                        <td>{{ item.product.get_price }}zł</td>
+                        <td>{{ item.quantity }}</td>
+                        <td>{{ item.product.get_price|mul:item.quantity|round_value:2 }}zł</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+                <tfoot>
+                <tr>
+                    <th colspan="3" class="has-text-right">Suma wartości:</th>
+                    <th>{{ total_value|round_value:2 }}zł</th>
+                </tr>
+                </tfoot>
+            </table>
+            <a href="{% url 'buy_cart' %}">
+                <button class="button is-success">Kup</button>
+            </a>
+        </div>
+    </section>
+{% endblock %}

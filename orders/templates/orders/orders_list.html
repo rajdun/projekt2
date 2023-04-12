@@ -29,6 +29,7 @@
                                     <p>Utworzono: {{ order.created_at }}</p>
                                     <p>Zaktualizowano: {{ order.updated_at }}</p>
                                     <p>Zakończono: {% if order.completed %}✅{% else %}❎{% endif %} </p>
+                                    <p>Adres dostawy: {{ order.address }}</p>
                                     <hr>
                                     <h2 class="subtitle">Towary z zamówienia:</h2>
                                     <ul>
