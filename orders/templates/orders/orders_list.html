@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <section class="section">
+        <div class="container">
+            <h1 class="title">Moje zamówienia</h1>
+            <nav class="breadcrumb" aria-label="breadcrumbs">
+                <ul>
+                    <li><a href="{% url 'orders_list' %}">Wszystkie</a></li>
+                    {% for status in statuses %}
+                        <li {% if selected_status == status.name %}class="is-active"{% endif %}>
+                            <a href="{% url 'orders_list' %}?status={{ status.name }}">{{ status.name }}</a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </nav>
+            <div class="columns is-multiline">
+                {% for order in orders %}
+                    <div class="column is-one-third">
+                        <div class="card">
+                            <header class="card-header">
+                                <p class="card-header-title">
+                                    Zamówienie #{{ order.id }}
+                                </p>
+                            </header>
+                            <div class="card-content">
+                                <div class="content">
+                                    <p>Status: {{ order.status.name }}</p>
+                                    <p>Utworzono: {{ order.created_at }}</p>
+                                    <p>Zaktualizowano: {{ order.updated_at }}</p>
+                                    <p>Zakończono: {% if order.completed %}✅{% else %}❎{% endif %} </p>
+                                    <hr>
+                                    <h2 class="subtitle">Towary z zamówienia:</h2>
+                                    <ul>
+                                        {% for item in order.order_items.all %}
+                                            <li>{{ item.product.name }} ({{ item.quantity }})</li>
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+{% endblock %}

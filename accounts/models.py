@@ -32,7 +32,7 @@ class Profile(models.Model):
         return self.user.username
 
     def get_amount(self):
-        return self.amount / 1000000
+        return round(self.amount / 1000000, 2)
 
     def set_amount(self, value):
         self.amount = value * 1000000

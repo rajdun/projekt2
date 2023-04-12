@@ -16,14 +16,37 @@
                 {% for product in products %}
                     <div class="tile is-6 is-parent">
                         <article class="tile is-child box">
-                            <p class="title">{{ product.name }}</p>
-                            <p class="subtitle">{{ product.category.name }}</p>
-                            <img src="{{ product.image.url }}" alt="Nie udało się załadować obrazka">
-                            <p>{{ product.description }}</p>
-                            <div class="content">
-                                <p>Quantity: {{ product.inventory.quantity }}</p>
-                                <p>Price: {{ product.get_price }}zł</p>
-                            </div>
+                            <form method="post" action="{% url 'add_to_cart_or_buy' %}">
+                                {% csrf_token %}
+                                <p class="title">{{ product.name }}</p>
+                                <p class="subtitle">{{ product.category.name }}</p>
+                                <img src="{{ product.image.url }}" alt="Nie udało się załadować obrazka">
+                                <p>{{ product.description }}</p>
+                                <div class="content">
+                                    <p>Quantity: {{ product.inventory.quantity }}</p>
+                                    <p>Price: {{ product.get_price }}zł</p>
+                                </div>
+                                <div class="field">
+                                    <label class="label">Ilość</label>
+                                    <div class="control">
+                                        <input class="input" type="number" name="quantity" min="1"
+                                               max="{{ product.inventory.quantity }}" value="1">
+                                    </div>
+                                </div>
+                                <input type="hidden" name="product_id" value="{{ product.id }}">
+                                <div class="field is-grouped">
+                                    <div class="control">
+                                        <button class="button is-link" type="submit" name="action" value="add_to_cart">
+                                            Dodaj do koszyka
+                                        </button>
+                                    </div>
+                                    <div class="control">
+                                        <button class="button is-primary" type="submit" name="action" value="buy_now">
+                                            Kup teraz
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
                         </article>
                     </div>
                 {% endfor %}

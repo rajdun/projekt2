@@ -25,5 +25,6 @@ urlpatterns = [
                   path('', include('pages.urls')),
                   path('login/', auth_views.LoginView.as_view(), name='login'),
                   path('account/', include('accounts.urls')),
-                  path('inventory', include('inventory.urls'))
+                  path('inventory', include('inventory.urls')),
+                  path('', include('orders.urls')),
               ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

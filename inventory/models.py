@@ -24,7 +24,7 @@ class Product(models.Model):
     is_active = models.BooleanField(default=False)
 
     def get_price(self):
-        return self.price / 1000000
+        return round(self.price / 1000000, 2)
 
     def set_price(self, value):
         self.price = value * 1000000

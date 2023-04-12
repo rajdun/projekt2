@@ -1,8 +1,10 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from .forms import ProductForm
-from .models import Product, Category
+from .models import Product, Category, Inventory
+from accounts.models import Profile
 from django.contrib.auth.decorators import login_required, user_passes_test
 from .decorators import can_manage_inventory
+from orders.models import Order, OrderItem, OrderStatus
 
 
 def products_list(request):
@@ -18,6 +20,47 @@ def products_list(request):
 
     context = {'products': products, 'categories': categories, 'selected_category': category_filter}
     return render(request, 'inventory/products_list.html', context)
+
+
+@login_required
+def buy_now(request):
+    if request.method == 'POST':
+        if request.POST['action'] == 'buy_now':
+            product_id = request.POST['product_id']
+            quantity = int(request.POST['quantity'])
+
+            product = get_object_or_404(Product, id=product_id)
+            inventory = get_object_or_404(Inventory, product=product)
+            status = get_object_or_404(OrderStatus, pk=1)
+            profile = get_object_or_404(Profile, user=request.user)
+
+            if quantity > inventory.quantity:
+                return redirect('products_list')
+
+            if product.get_price() * quantity > profile.get_amount():
+                return redirect('products_list')
+
+            order = Order()
+            order.user = request.user
+            order.status = status
+            order.save()
+
+            order_item = OrderItem()
+            order_item.order = order
+            order_item.product = product
+            order_item.quantity = quantity
+
+            inventory.quantity = inventory.quantity - quantity
+            profile.amount = profile.amount - product.price * quantity
+            profile.save()
+            inventory.save()
+            order_item.save()
+
+            return redirect('orders_list')
+        else:
+            return redirect('products_list')
+    else:
+        return redirect('products_list')
 
 
 @login_required

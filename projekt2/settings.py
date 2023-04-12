@@ -33,6 +33,7 @@ INSTALLED_APPS = [
     'pages',
     'accounts',
     'inventory',
+    'orders',
     'widget_tweaks',
     'django.contrib.admin',
     'django.contrib.auth',
