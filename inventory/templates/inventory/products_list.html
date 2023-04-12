@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <section class="section">
+        <div class="container">
+            <h1 class="title">Lista produktów</h1>
+            <nav class="breadcrumb" aria-label="breadcrumbs">
+                <ul>
+                    <li><a href="?">Wszystkie</a></li>
+                    {% for category in categories %}
+                        <li><a href="?category={{ category.name }}">{{ category.name }}</a></li>
+                    {% endfor %}
+                </ul>
+            </nav>
+            <div class="tile is-ancestor is-flex-wrap-wrap">
+                {% for product in products %}
+                    <div class="tile is-6 is-parent">
+                        <article class="tile is-child box">
+                            <p class="title">{{ product.name }}</p>
+                            <p class="subtitle">{{ product.category.name }}</p>
+                            <img src="{{ product.image.url }}" alt="Nie udało się załadować obrazka">
+                            <p>{{ product.description }}</p>
+                            <div class="content">
+                                <p>Quantity: {{ product.inventory.quantity }}</p>
+                                <p>Price: {{ product.get_price }}zł</p>
+                            </div>
+                        </article>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+{% endblock %}

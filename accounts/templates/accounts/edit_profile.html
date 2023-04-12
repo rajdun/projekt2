@@ -17,6 +17,10 @@
                             {{ profile_form.phone_number.label_tag }}
                             {{ profile_form.phone_number|add_class:"input" }}
                         </div>
+                        <div class="field">
+                            <img src="{{ user.profile.profile_picture.url }}" alt="Błąd podczas ładowania pliku">
+                            {{ profile_form.profile_picture|add_class:"input" }}
+                        </div>
                     </div>
                     <div class="column is-half">
                         <h3 class="title is-3">Adres:</h3>

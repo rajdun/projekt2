@@ -24,7 +24,7 @@ class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     # Additional fields for profile model
     phone_number = models.CharField(max_length=15, verbose_name='Numer telefonu')
-    profile_picture = models.ImageField(upload_to='profile_pics', blank=True, verbose_name='Obrazek profilowy')
+    profile_picture = models.ImageField(upload_to='media/profile_pics', blank=True, verbose_name='Obrazek profilowy')
     default_address = models.ForeignKey(Address, on_delete=models.CASCADE)
     amount = models.BigIntegerField(default=0, verbose_name='Kwota')
 

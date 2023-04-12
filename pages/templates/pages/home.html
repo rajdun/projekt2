@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load inventory_extras %}
 
 {% block title %}Sahara - Strona główna.{% endblock %}
 {% block content %}
@@ -8,6 +9,11 @@
         </header>
 
         <main>
+            {% if user.is_authenticated and user|can_manage_inventory %}
+                <a href="/admin/inventory">
+                    <button class="button is-success">Zarządzaj towarami</button>
+                </a>
+            {% endif %}
             <div class="card my-5">
                 <div class="card-header">
                     <p class="card-header-title">O nas</p>

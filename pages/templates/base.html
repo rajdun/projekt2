@@ -43,7 +43,7 @@
             <a class="navbar-item" href="{% url 'home' %}">
                 Strona główna
             </a>
-            <a class="navbar-item">
+            <a class="navbar-item" href="{% url 'products_list' %}">
                 Sklep
             </a>
             {% if user.is_authenticated %}
@@ -69,7 +69,7 @@
                             </a>
                         {% endif %}
                         <a class="button is-light" href="{% url 'logout' %}">
-                            Wyloguj się!
+                            Wyloguj się
                         </a>
                     {% else %}
                         <a class="button is-primary" href="{% url 'register' %}">
