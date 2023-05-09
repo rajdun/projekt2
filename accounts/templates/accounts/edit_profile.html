@@ -18,7 +18,11 @@
                             {{ profile_form.phone_number|add_class:"input" }}
                         </div>
                         <div class="field">
-                            <img src="{{ user.profile.profile_picture.url }}" alt="Błąd podczas ładowania pliku">
+                            {% if user.profile.profile_picture %}
+                                <img src="{{ user.profile.profile_picture.url }}" alt="Błąd podczas ładowania pliku">
+                            {% else %}
+                                <p>Nie masz jeszcze zdjęcia profilowego. Ustaw je teraz!</p>
+                            {% endif %}
                             {{ profile_form.profile_picture|add_class:"input" }}
                         </div>
                     </div>

@@ -57,7 +57,15 @@ Uruchom migracje, aby utworzyć strukturę bazy danych:
 python manage.py migrate
 ```
 
-## Krok 6: Stwórz superusera
+## Krok 6: Wczytaj podstawowe dane
+
+Wczytaj informacje o grupach i ich uprawnieniach.
+
+```
+python manage.py loaddata group_permissions.json
+```
+
+## Krok 7: Stwórz superusera
 
 Stwórz superusera, aby mieć dostęp do panelu administracyjnego Django:
 
@@ -67,7 +75,7 @@ python manage.py createsuperuser
 
 Podczas tworzenia superusera zostaniesz poproszony o podanie nazwy użytkownika, adresu e-mail i hasła.
 
-## Krok 7: Uruchom serwer
+## Krok 8: Uruchom serwer
 
 Uruchom serwer Django za pomocą polecenia:
 
@@ -75,7 +83,7 @@ Uruchom serwer Django za pomocą polecenia:
 python manage.py runserver
 ```
 
-## Krok 8: Otwórz stronę w przeglądarce
+## Krok 9: Otwórz stronę w przeglądarce
 
 Serwer powinien działać na porcie 8000. Otwórz przeglądarkę i wpisz następujący adres:
 
